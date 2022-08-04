@@ -118,8 +118,10 @@ public class BoardDAO {
         try {
             ptmt = con.prepareStatement(sql);
             rs = ptmt.executeQuery();
+            rs.next();
             dto.id = rs.getInt(1);
             dto.gid = rs.getInt(1);
+
 
 
             sql = "insert into board (id, title, pname, pw, content, reg_date, cnt, upfile, seq, level, gid)"
