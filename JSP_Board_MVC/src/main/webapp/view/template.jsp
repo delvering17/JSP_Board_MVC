@@ -11,7 +11,7 @@
     <title>template</title>
 </head>
 <body>
-    <table>
+    <table border="">
         <tr>
             <td>
                 <jsp:include page="inc/top.jsp"/>
@@ -19,7 +19,7 @@
         </tr>
         <tr>
             <td>
-<%--                TODO - main view 화면이 만들어지면(list) mainUrl로 연결--%>
+                <jsp:include page="${mainUrl}"/>
             </td>
         </tr>
         <tr>
