@@ -19,7 +19,7 @@
     <c:forEach items="${mainData}" var="dto" varStatus="no">
         <tr>
             <td>${no.index+1}</td>
-            <td><a href="BoardDetail">${dto.title}</a></td>
+            <td><a href="BoardDetail?id="+${dto.id}>${dto.title}</a></td>
             <td>${dto.pname}</td>
             <td><fmt:formatDate value="${dto.reg_date}" pattern="yyyy-MM-dd HH:mm"/></td>
             <td>${dto.cnt}</td>
