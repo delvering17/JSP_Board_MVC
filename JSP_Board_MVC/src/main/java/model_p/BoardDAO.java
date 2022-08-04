@@ -112,6 +112,41 @@ public class BoardDAO {
         return res;
     }
 
+    public void insert(BoardDTO dto) {
+
+        sql = "select max(id)+1 from board";
+        try {
+            ptmt = con.prepareStatement(sql);
+            rs = ptmt.executeQuery();
+            dto.id = rs.getInt(1);
+            dto.gid = rs.getInt(1);
+
+
+            sql = "insert into board (id, title, pname, pw, content, reg_date, cnt, upfile, seq, level, gid)"
+                    + "values (?,?,?,?,?,sysdate(), -1,?,0,0,?)";
+
+            ptmt =con.prepareStatement(sql);
+            ptmt.setInt(1, dto.id);
+            ptmt.setString(2, dto.title);
+            ptmt.setString(3, dto.pname);
+            ptmt.setString(4, dto.pw);
+            ptmt.setString(5, dto.content);
+            ptmt.setString(6, dto.upfile);
+            ptmt.setInt(7, dto.gid);
+
+            ptmt.executeUpdate();
+
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close();
+        }
+
+
+    }
+
 
     public void close() {
         if(rs != null) {
