@@ -24,7 +24,7 @@
         </tr>
         <tr>
             <td>
-                <jsp:include page="inc/top.jsp"/>
+                <jsp:include page="inc/bottom.jsp"/>
             </td>
         </tr>
 
