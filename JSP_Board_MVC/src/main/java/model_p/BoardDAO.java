@@ -7,6 +7,8 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class BoardDAO {
 
@@ -26,4 +28,67 @@ public class BoardDAO {
         }
 
     }
+
+    public ArrayList<BoardDTO> list() {
+        ArrayList<BoardDTO> res = new ArrayList<>();
+
+        sql = "select * from board";
+
+
+        try {
+            ptmt = con.prepareStatement(sql);
+            rs = ptmt.executeQuery();
+
+            while(rs.next()) {
+                BoardDTO dto = new BoardDTO();
+
+                dto.setId(rs.getInt("id"));
+                dto.setTitle(rs.getString("title"));
+                dto.setPname(rs.getString("pname"));
+                dto.setReg_date(rs.getTimestamp("reg_date"));
+                dto.setCnt(rs.getInt("cnt"));
+                dto.setSeq(rs.getInt("seq"));
+                dto.setLevel(rs.getInt("level"));
+                dto.setGid(rs.getInt("gid"));
+
+                res.add(dto);
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close();
+        }
+
+
+        return res;
+    }
+
+
+    public void close() {
+        if(rs != null) {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        if(ptmt != null) {
+            try {
+                ptmt.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        if(con != null) {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
+
 }
