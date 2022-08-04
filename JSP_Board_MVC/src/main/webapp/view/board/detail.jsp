@@ -36,7 +36,7 @@
 
                 </c:when>
                 <c:otherwise>
-<%--                    <a href="<c:url value="/nonView/FileDown"/>?upfile=${dto.upfile}">${dto.upfileEn}다운로드</a>--%>
+                    <a href="<c:url value="/nonView/FileDown"/>?upfile=${dto.upfileEn }">${dto.upfile }다운로드</a>
                 </c:otherwise>
             </c:choose>
             </td>
