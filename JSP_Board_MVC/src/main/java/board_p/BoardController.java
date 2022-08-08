@@ -14,6 +14,7 @@ public class BoardController extends HttpServlet {
     public BoardController() {
 
         nonService.put("BoardInsertForm","board/insertForm.jsp");
+        nonService.put("BoardDeleteForm","board/deleteForm.jsp");
 
     }
 
