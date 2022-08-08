@@ -1,5 +1,7 @@
 package model_p;
 
+import jdk.tools.jmod.Main;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -209,6 +211,46 @@ public class BoardDAO {
         }
 
         return 0;
+
+    }
+
+    public void reply(BoardDTO dto) {
+
+        sql = "update board set seq = seq + 1 where gid = ? and seq > ?";
+        try {
+            ptmt = con.prepareStatement(sql);
+            ptmt.setInt(1, dto.gid);
+            ptmt.setInt(2, dto.seq);
+
+            ptmt.executeUpdate();
+
+            sql = "insert into board ( title, pname, pw, content, reg_date, cnt, upfile, seq, level, gid) "
+                    + "values (?,?,?,?,sysdate(), -1,null,?,?,?)";
+
+            ptmt = con.prepareStatement(sql);
+
+            ptmt.setString(1, dto.title);
+            ptmt.setString(2, dto.pname);
+            ptmt.setString(3, dto.pw);
+            ptmt.setString(4, dto.content);
+            ptmt.setInt(5, dto.seq + 1);
+            ptmt.setInt(6, dto.level + 1);
+            ptmt.setInt(7, dto.gid);
+
+            ptmt.executeUpdate();
+
+            // 새 글 ID 얻어오기
+//            sql = "select max(id) from board";
+//
+//            ptmt = con.prepareStatement(sql);
+//            rs = ptmt.executeQuery();
+//            rs.next();
+//            dto.id = rs.getInt(1);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
 
     }
 
