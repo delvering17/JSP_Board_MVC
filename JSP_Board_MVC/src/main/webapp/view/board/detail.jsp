@@ -49,6 +49,7 @@
         <td colspan="2" align="right">
             <a href="BoardModifyForm?id=${dto.id }">수정</a>
             <a href="BoardDeleteForm?id=${dto.id }">삭제</a>
+            <a href="BoardReplyForm?id=${dto.id }">답변</a>
             <a href="BoardList">목록으로</a>
         </td>
     </tr>
