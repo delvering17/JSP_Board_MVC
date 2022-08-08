@@ -149,6 +149,24 @@ public class BoardDAO {
 
     }
 
+    public int delete(BoardDTO dto) {
+        sql = "delete from board where id = ? and pw = ?";
+
+        try {
+            ptmt = con.prepareStatement(sql);
+            ptmt.setInt(1,dto.id);
+            ptmt.setString(2,dto.pw);
+
+            return ptmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return 0 ;
+    }
+
 
     public void close() {
         if(rs != null) {
