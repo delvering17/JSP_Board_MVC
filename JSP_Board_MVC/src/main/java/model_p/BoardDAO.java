@@ -167,6 +167,25 @@ public class BoardDAO {
         return 0 ;
     }
 
+    public int fileDelete(BoardDTO dto) {
+
+        sql = "update board set upfile = null where id = ? and pw = ?";
+
+        try {
+            ptmt = con.prepareStatement(sql);
+            ptmt.setInt(1, dto.id);
+            ptmt.setString(2, dto.pw);
+
+            return ptmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return 0;
+    }
+
 
     public void close() {
         if(rs != null) {
