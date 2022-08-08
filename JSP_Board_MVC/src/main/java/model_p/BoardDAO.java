@@ -186,6 +186,32 @@ public class BoardDAO {
         return 0;
     }
 
+    public int modify(BoardDTO dto) {
+
+        try {
+            sql = "update board set title = ?, pname = ?, content = ?, upfile = ? where id = ? and pw = ?";
+
+            ptmt =con.prepareStatement(sql);
+            ptmt.setString(1, dto.title);
+            ptmt.setString(2, dto.pname);
+            ptmt.setString(3, dto.content);
+            ptmt.setString(4, dto.upfile);
+            ptmt.setInt(5, dto.id);
+            ptmt.setString(6, dto.pw);
+
+            return ptmt.executeUpdate();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            close();
+        }
+
+        return 0;
+
+    }
+
 
     public void close() {
         if(rs != null) {
