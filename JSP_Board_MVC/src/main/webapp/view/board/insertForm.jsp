@@ -26,7 +26,7 @@
     <tr>
       <td colspan="2" align="center">
         <input type="submit" value="작성" />
-        <a href="BoardList">목록으로</a>
+        <a href="BoardList?nowPage=${nowPage}">목록으로</a>
       </td>
     </tr>
   </table>
