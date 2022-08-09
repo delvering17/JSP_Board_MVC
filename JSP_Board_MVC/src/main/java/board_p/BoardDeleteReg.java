@@ -1,13 +1,16 @@
 package board_p;
 
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-import model_p.BoardDAO;
-import model_p.BoardDTO;
+import java.io.File;
+import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
+import model_p.BoardDAO;
+import model_p.BoardDTO;
 
 public class BoardDeleteReg implements BoardService {
 
@@ -24,7 +27,7 @@ public class BoardDeleteReg implements BoardService {
 
 
         String msg = "암호가 일치하지 않습니다.";
-        String goUrl = "BoardDeleteForm?id="+dto.getId();
+        String goUrl = "BoardDeleteForm?id="+dto.getId() + "&nowPage=" + request.getAttribute("nowPage");
 
         BoardDTO fileDto = new BoardDAO().detail(dto.getId());
 
@@ -32,7 +35,7 @@ public class BoardDeleteReg implements BoardService {
 
         if(cnt>0) {
             msg = "삭제 되었습니다.";
-            goUrl = "BoardList";
+            goUrl = "BoardList?nowPage=" + request.getAttribute("nowPage");
 
             if(fileDto.getUpfile() != null) {
                 new File(path+"/"+fileDto.getUpfile()).delete();
@@ -40,9 +43,12 @@ public class BoardDeleteReg implements BoardService {
             }
         }
 
+        ;
         request.setAttribute("mainUrl", "board/alert.jsp");
         request.setAttribute("msg", msg);
         request.setAttribute("goUrl", goUrl);
     }
 
 }
+// ck 에디터
+
