@@ -1,7 +1,5 @@
 package model_p;
 
-import jdk.tools.jmod.Main;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
