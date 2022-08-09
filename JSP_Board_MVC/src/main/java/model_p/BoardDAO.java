@@ -31,14 +31,17 @@ public class BoardDAO {
 
     }
 
-    public ArrayList<BoardDTO> list() {
+    public ArrayList<BoardDTO> list(int first, int limit) {
         ArrayList<BoardDTO> res = new ArrayList<>();
 
-        sql = "select * from board";
+        sql = "select * from board order by gid desc, seq limit ?,?";
 
 
         try {
             ptmt = con.prepareStatement(sql);
+            ptmt.setInt(1, first);
+            ptmt.setInt(2, limit);
+
             rs = ptmt.executeQuery();
 
             while(rs.next()) {
@@ -251,7 +254,25 @@ public class BoardDAO {
             throw new RuntimeException(e);
         }
 
+    }
 
+    public int total() {
+
+        sql = "select count(*) from board";
+
+        try {
+            ptmt = con.prepareStatement(sql);
+            rs = ptmt.executeQuery();
+
+            rs.next();
+
+            return rs.getInt(1);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 
 
