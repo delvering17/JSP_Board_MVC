@@ -1,13 +1,15 @@
 package board_p;
 
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-import model_p.BoardDAO;
-import model_p.BoardDTO;
+import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
+import model_p.BoardDAO;
+import model_p.BoardDTO;
 
 public class BoardModifyReg implements BoardService {
 
@@ -26,16 +28,19 @@ public class BoardModifyReg implements BoardService {
                     "UTF-8",
                     new DefaultFileRenamePolicy());
 
+
+            int nowPage = Integer.parseInt(mr.getParameter("nowPage"));
+            request.setAttribute("nowPage", nowPage);
+
             BoardDTO dto = new BoardDTO();
             dto.setId(Integer.parseInt(mr.getParameter("id")));
             dto.setTitle(mr.getParameter("title"));
             dto.setPname(mr.getParameter("pname"));
             dto.setPw(mr.getParameter("pw"));
             dto.setContent(mr.getParameter("content"));
-
-            if(mr.getParameter("upfile") != null) {
+            if(mr.getParameter("upfile")!=null) {
                 dto.setUpfile(mr.getParameter("upfile"));
-            } else {
+            }else {
                 dto.setUpfile(mr.getFilesystemName("upfile"));
             }
 
@@ -43,14 +48,11 @@ public class BoardModifyReg implements BoardService {
 
             String msg = "수정 실패";
             String mainUrl = "board/modifyForm.jsp";
-
-
             if(cnt>0) {
 
                 msg = "수정 성공";
                 mainUrl = "board/alert.jsp";
-                request.setAttribute("goUrl","BoardDetail?id="+dto.getId());
-
+                request.setAttribute("goUrl", "BoardDetail?id="+dto.getId()+"&nowPage="+nowPage);
             }
 
             System.out.println(dto);
