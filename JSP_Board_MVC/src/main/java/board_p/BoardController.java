@@ -4,6 +4,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 
 @WebServlet("/board/*")
@@ -20,13 +21,26 @@ public class BoardController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String service = request.getRequestURI().substring((request.getContextPath()+"/board/").length());
+
         try {
+            request.setCharacterEncoding("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        int nowPage = 1;
+
+        if(request.getParameter("nowPage") != null) {
+            nowPage = Integer.parseInt(request.getParameter("nowPage"));
+        }
+
+        request.setAttribute("nowPage", nowPage);
 
 
 
+        String service = request.getRequestURI().substring((request.getContextPath()+"/board/").length());
 
-
+        try {
 
             if (nonService.containsKey(service)) {
                 request.setAttribute("mainUrl", nonService.get(service));
