@@ -7,9 +7,11 @@ import model_p.BoardDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-public class BoardReplyReg implements BoardService{
+public class BoardReplyReg implements BoardService {
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
 
@@ -31,9 +33,12 @@ public class BoardReplyReg implements BoardService{
 
         new BoardDAO().reply(dto);
 
+//            System.out.println(dto);
+
         request.setAttribute("mainUrl", "board/alert.jsp");
         request.setAttribute("msg", "입력되었습니다.");
-        request.setAttribute("goUrl", "BoardDetail?id="+dto.getId());
+        request.setAttribute("goUrl", "BoardDetail?id="+dto.getId() + "&nowPage=" + request.getAttribute("nowPage"));
 
     }
+
 }
